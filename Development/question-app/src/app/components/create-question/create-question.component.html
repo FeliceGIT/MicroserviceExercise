@@ -1,0 +1,20 @@
+<div style="text-align: center;">
+    <form (ngSubmit)="onSubmit()" #questionForm="ngForm">
+        <div>
+            <mat-form-field>
+              <mat-label>Question</mat-label>
+              <input matInput [(ngModel)]="questionService.question.text" id="questionText" name="questionText" type="text" required #questionText="ngModel">
+            </mat-form-field>
+            <button class="add-btn" type="button" mat-raised-button color="primary" (click)="addOption()">
+                <mat-icon>add</mat-icon>
+            </button>
+            <div *ngFor="let option of questionService.question.options; index as i">
+                <mat-form-field>
+                    <mat-label>Option {{i + 1}}</mat-label>
+                    <input matInput [(ngModel)]="option.text" id="optionText" name="optionText" type="text" required #optionText="ngModel">
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+    <button mat-raised-button color="primary" (click)="onSubmit()">Save Question</button>
+</div>

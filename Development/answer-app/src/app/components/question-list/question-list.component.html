@@ -1,0 +1,19 @@
+<div class="question-list-content">
+    <mat-accordion>
+        <div *ngFor="let question of questions">
+            <mat-expansion-panel (opened)="setSelectedQuestion($event, question)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{question.text}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-radio-group class="option-radio-group">
+                    <mat-radio-button class="option-radio-button" *ngFor="let option of question.options" [value]="option" (change)="changeHandlerRadio($event, option)">
+                        {{option.text}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <button mat-raised-button type="submit" [disabled]="!optionSelected()" (click)="saveResponse()">Submit</button>
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
+</div>
