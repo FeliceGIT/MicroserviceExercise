@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  question-app:
+    build: question-app
+    image: question-frontend
+    ports:
+      - '4200:4200'
+    networks:
+        - frontendNetwork
+    depends_on:
+        - spring-api
+        
+  answer-app:
+    build: answer-app
+    image: answer-frontend
+    ports:
+      - '4210:4210'
+    networks:
+        - frontendNetwork
+    depends_on:
+        - spring-api
+  
+  spring-api:
+    build: spring
+    image: spring-backend
+    ports:
+      -  '8080:8080'
+    networks:
+        - backendNetwork
+        - frontendNetwork
+    depends_on:
+        - postgres_db
+      
+  postgres_db:
+      image: postgres
+      restart: always
+      container_name: postgres_db
+      environment:
+         POSTGRES_DB: postgres_db
+         POSTGRES_USER: user
+         POSTGRES_PASSWORD: password
+      ports:
+         - 5432:5432
+      volumes:
+         - postgres_db:/var/lib/mysql
+      networks:
+        - backendNetwork
+ 
+volumes:
+   postgres_db:
+   
+networks:
+   backendNetwork:
+   frontendNetwork:
